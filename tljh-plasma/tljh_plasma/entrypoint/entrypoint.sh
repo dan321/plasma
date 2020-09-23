@@ -7,7 +7,7 @@ set -e
 
 # handle user override
 # NB_GID=${NB_UID}
-NB_GID
+NB_GID=1006
 PATH=${PATH//jovyan/$NB_USER}
 IMAGE_DIR=${HOME}/${USER_IMAGE}
 
