@@ -6,7 +6,8 @@ set -e
 # https://github.com/jupyterhub/dockerspawner/blob/6f7e04ce9f989e98cf99bb2a6dfa1cff96466135/dockerspawner/systemuserspawner.py#L113
 
 # handle user override
-NB_GID=${NB_UID}
+# NB_GID=${NB_UID}
+NB_GID
 PATH=${PATH//jovyan/$NB_USER}
 IMAGE_DIR=${HOME}/${USER_IMAGE}
 
