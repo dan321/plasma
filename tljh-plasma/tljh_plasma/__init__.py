@@ -25,7 +25,7 @@ class PlasmaSpawner(SpawnerMixin, SystemUserSpawner):
     )
 
     shared_data_path = Unicode(
-        "/srv/data", config=True, help="The path to the shared data folder"
+        "/falls", config=True, help="The path to the shared data folder"
     )
 
     async def list_images(self):
@@ -72,7 +72,7 @@ class PlasmaSpawner(SpawnerMixin, SystemUserSpawner):
             os.path.join(
                 os.path.dirname(__file__), "entrypoint", "entrypoint.sh"
             ): "/usr/local/bin/repo2docker-entrypoint",
-            self.shared_data_path: {"bind": "/srv/data", "mode": "ro"},
+            self.shared_data_path: {"bind": os.path.join(self.image_homedir_format_string, "falls")},
         }
 
         return await super().start(*args, **kwargs)
@@ -118,8 +118,7 @@ def tljh_custom_jupyterhub_config(c, tljh_config_file=CONFIG_FILE):
     c.PlasmaSpawner.start_timeout = 120
     c.PlasmaSpawner.pull_policy = "Never"
     c.PlasmaSpawner.remove = True
-    c.PlasmaSpawner.default_url = "/lab"
-    # TODO: change back to jupyterhub-singleuser
+    c.PlasmaSpawner.default_url = "/rstudio"
     c.PlasmaSpawner.cmd = ["/srv/conda/envs/notebook/bin/jupyterhub-singleuser"]
     # set the default cpu and memory limits
     c.PlasmaSpawner.args = ["--ResourceUseDisplay.track_cpu_percent=True"]
